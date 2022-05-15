@@ -4,7 +4,7 @@ export const AuthService = {
   login: (data) => {
     return API.post("/login", data)
       .then(({ data }) => {
-        API.defaults.headers["Authorisation"] = `Baerer ${data.token}`;
+        setHeadersAndStorage(data);
         return data;
       })
       .catch((err) => {
@@ -15,7 +15,7 @@ export const AuthService = {
   register: (data) => {
     return API.post("/register", data)
       .then(({ data }) => {
-        API.defaults.headers["Authorisation"] = `Baerer ${data.token}`;
+        setHeadersAndStorage(data);
         return data;
       })
       .catch((err) => {
@@ -24,6 +24,14 @@ export const AuthService = {
       });
   },
   logout: () => {
-    API.defaults.headers["Authorisation"] = '';
+    API.defaults.headers["Authorisation"] = "";
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   },
+};
+
+const setHeadersAndStorage = ({ user, token }) => {
+  API.defaults.headers["Authorisation"] = `Baerer ${token}`;
+  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("token", token);
 };
