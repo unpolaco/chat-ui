@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthService } from "../../services/authService";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/actions/auth";
 
 export const Login = () => {
-  const [email, setEmail] = useState('johndoe@gmail.com');
-  const [password, setPassword] = useState('secret');
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const [email, setEmail] = useState("johndoe@gmail.com");
+  const [password, setPassword] = useState("secret");
 
-  const submitLoginForm = (e) =>{
-    e.preventDefault()
-    AuthService.login({email, password}).then(res => console.log(res))
-  }
+  const submitForm = (e) => {
+    e.preventDefault();
+    dispatch(login({email, password}, navigate))
+  };
 
   return (
     <div>
@@ -19,13 +22,13 @@ export const Login = () => {
         </div>
         <div>
           <h2>Welcome back!</h2>
-          <form onSubmit={submitLoginForm}>
+          <form onSubmit={submitForm}>
             <div>
               <input
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
-                type='text'
+                type="text"
                 required
               />
             </div>
@@ -34,11 +37,11 @@ export const Login = () => {
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                type='password'
+                type="password"
                 required
               />
             </div>
-            <button type="submit" >LOGIN</button>
+            <button type="submit">LOGIN</button>
           </form>
           <p>
             Don't have an account yet? Register <Link to="/register">here</Link>
