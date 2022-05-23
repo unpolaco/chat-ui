@@ -7,7 +7,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [email, setEmail] = useState("johndoe@gmail.com");
-  const [password, setPassword] = useState("secret");
+  const [password, setPassword] = useState("secure12");
 
   const submitForm = (e) => {
     e.preventDefault();

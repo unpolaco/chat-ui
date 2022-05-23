@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {updateProfile} from '../../store/actions/auth'
 
-export const Modal = ({ onClose }) => {
+export const Modal = ({ setShowProfileModal }) => {
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.authReducer.user);
 
   const [firstName, setFirstName] = useState(user.firstName);
@@ -13,18 +15,18 @@ export const Modal = ({ onClose }) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    const form = { firstName, lastName, email, gender, password, avatar };
+    const form = { firstName, lastName, email, gender, avatar };
+    if (password.length > 0) form.password = password
     const formData = new FormData();
     for (const key in form) {
       formData.append(key, form[key]);
     }
-
-    //dispatch
+    dispatch(updateProfile(formData)).then(() => setShowProfileModal(false))
   };
 
   const closeModal = (e) => {
     e.stopPropagation();
-    return onClose();
+    return setShowProfileModal(false);
   };
 
   return (
@@ -75,12 +77,12 @@ export const Modal = ({ onClose }) => {
           <div>
             <input onChange={(e) => setAvatar(e.target.files[0])} type="file" />
           </div>
-          <button type="submit">UPDATE</button>
+          <button type="submit" onClick={submitForm} >UPDATE</button>
         </form>
       </div>
       <div>
         Modal Footer
-        <button onClick={closeModal}>CLOSE</button>
+        <button onClick={(e) => closeModal(e)}>CLOSE</button>
       </div>
     </div>
   );

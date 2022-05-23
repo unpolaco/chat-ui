@@ -1,39 +1,43 @@
-import { LOGIN, LOGOUT, REGISTER } from "../actions/auth"
+import { LOGIN, LOGOUT, REGISTER, UPDATE_PROFILE } from "../types/types";
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem('user')) || {},
-    token: localStorage.getItem('token') || '',
-    isLoggedIn: localStorage.getItem('user') ? true : false
-}
+  user: JSON.parse(localStorage.getItem("user")) || {},
+  token: localStorage.getItem("token") || "",
+  isLoggedIn: localStorage.getItem("user") ? true : false,
+};
 
-export const authReducer = (state= initialState, action) => {
-const {type, payload} = action
+export const authReducer = (state = initialState, action) => {
+  const { type, payload } = action;
 
-switch (type){
+  switch (type) {
     case LOGIN:
-        return {
-            ...state,
-            user: payload.user,
-            token: payload.token,
-            isLoggedIn: true
-        }
+      return {
+        ...state,
+        user: payload.user,
+        token: payload.token,
+        isLoggedIn: true,
+      };
     case REGISTER:
-        return {
-            ...state,
-            user: payload.user,
-            token: payload.token,
-            isLoggedIn: true
-        }
+      return {
+        ...state,
+        user: payload.user,
+        token: payload.token,
+        isLoggedIn: true,
+      };
     case LOGOUT:
-        return {
-            ...state,
-            user: {},
-            token: '',
-            isLoggedIn: false
-        }
-        default: {
-            return state
-        }
-}
-
-}
+      return {
+        ...state,
+        user: {},
+        token: "",
+        isLoggedIn: false,
+      };
+    case UPDATE_PROFILE:
+      return {
+        ...state,
+        user: payload,
+      };
+    default: {
+      return state;
+    }
+  }
+};

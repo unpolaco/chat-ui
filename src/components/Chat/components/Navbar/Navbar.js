@@ -12,18 +12,20 @@ export const Navbar = () => {
   return (
     <div>
       <div onClick={() => setShowProfileOptions(!showProfileOptions)}>
-        <img src="" alt="Avatar" />
+        <img width="40px" height="40px" src={user.avatar} alt="Avatar" />
         <p>
           {user.firstName} {user.lastName}
         </p>
         {showProfileOptions && (
           <div>
-            <p onClick={()=> setShowProfileModal(true)}>Update profile</p>
+            <p onClick={() => setShowProfileModal(true)}>Update profile</p>
             <p onClick={() => dispatch(logout())}>Logout</p>
           </div>
         )}
 
-        {showProfileModal && <Modal onClose={()=> setShowProfileModal(false)}/>}
+        {showProfileModal && (
+          <Modal setShowProfileModal={(boolean) => setShowProfileModal(boolean)} />
+        )}
       </div>
     </div>
   );
