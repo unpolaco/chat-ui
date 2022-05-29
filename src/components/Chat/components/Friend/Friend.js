@@ -1,3 +1,4 @@
+import { Avatar, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -14,16 +15,16 @@ export const Friend = ({ chat }) => {
   };
 
   return (
-    <div>
-      <div>
-        <img src={chat.Users[0].avatar} alt="User avatar" />
-        <div>
-          <h4>
+    <Paper sx={{margin: '5px'}}>
+      <div style={{display: 'flex', alignItems: 'center', padding: '5px'}}>
+        <Avatar src={chat.Users[0].avatar} alt="User avatar" sx={{width: '30px', height: '30px'}}/>
+          <Typography component='subtitle2' sx={{margin: '10px'}}>
             {chat.Users[0].firstName} {chat.Users[0].lastName}
-          </h4>
+          </Typography>
+        <div>
           <h5>{lastMessage()}</h5>
         </div>
       </div>
-    </div>
+    </Paper>
   );
 };

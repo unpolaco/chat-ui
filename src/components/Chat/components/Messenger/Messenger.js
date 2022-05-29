@@ -1,7 +1,11 @@
-import React from 'react'
+import { Paper } from "@mui/material";
+import React from "react";
+import { messengerWrapper } from "./Messenger.styles";
 
 export const Messenger = () => {
   return (
-    <div>Messenger</div>
-  )
-}
+    <Paper className={messengerWrapper}>
+      <div>Messenger view</div>
+    </Paper>
+  );
+};
