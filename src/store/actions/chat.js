@@ -1,5 +1,5 @@
 import { ChatService } from "../../services/chatService";
-import { FETCH_CHATS } from "../types/types";
+import { FETCH_CHATS, SET_CURRENT_CHAT } from "../types/types";
 
 export const fetchChats = () => (dispatch) => {
   return ChatService.fetchChats()
@@ -16,3 +16,7 @@ export const fetchChats = () => (dispatch) => {
       throw err;
     });
 };
+
+export const setCurrentChat = (chat) => dispatch =>  {
+  dispatch({ type: SET_CURRENT_CHAT, payload: chat})
+}
