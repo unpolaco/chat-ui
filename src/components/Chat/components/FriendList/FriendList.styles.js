@@ -8,5 +8,4 @@ export const friendListWrapper = css({
 export const addContactBtn = css({
   display: "flex",
   justifyContent: 'space-between',
-//   margin: "20px",
 });
