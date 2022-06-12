@@ -15,8 +15,8 @@ import { login } from "../../store/actions/auth";
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("johndoe@gmail.com");
-  const [password, setPassword] = useState("secure12");
+  const [email, setEmail] = useState("ameliasmiths@gmail.com");
+  const [password, setPassword] = useState("weaksecret");
 
   const submitForm = (e) => {
     e.preventDefault();

@@ -34,7 +34,7 @@ export const MessageInput = ({ chat }) => {
     <div>
       <OutlinedInput
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={(e) => handleMessage(e)}
         onKeyDown={(e) => handleKeyDown(e)}
         endAdornment={
           <InputAdornment position="end">

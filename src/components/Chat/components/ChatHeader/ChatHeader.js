@@ -28,12 +28,12 @@ export const ChatHeader = ({ chat }) => {
     <div>
       {chat.Users.map((user) => {
         return (
-          <div>
+          <div key={user.id}>
             <StyledBadge
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               variant="dot"
-              userStatus={userStatus(user)}
+              userstatus={userStatus(user)}
             >
               <Avatar
                 src={user.avatar}

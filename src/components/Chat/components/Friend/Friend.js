@@ -23,7 +23,7 @@ export const Friend = ({ chat, click }) => {
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           variant="dot"
-          userStatus={userStatus(chat.Users[0])}
+          userstatus={userStatus(chat.Users[0])}
         >
           <Avatar
             src={chat.Users[0].avatar}
