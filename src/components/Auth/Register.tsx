@@ -15,6 +15,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { register } from "../../store/actions/auth";
+import { Gender } from "../../types/chat.types";
 
 export const Register = () => {
   const dispatch = useDispatch();
@@ -22,12 +23,13 @@ export const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("male");
+  const [gender, setGender] = useState<Gender>(Gender.male);
   const [password, setPassword] = useState("");
-
+  //@ts-ignore
   const submitForm = (e) => {
     e.preventDefault();
     dispatch(
+      //@ts-ignore
       register({ firstName, lastName, email, gender, password }, navigate)
     );
   };
@@ -49,13 +51,8 @@ export const Register = () => {
         <Typography component="h1" variant="h5">
           Create an account
         </Typography>
-        <Box
-          component="form"
-          onSubmit={submitForm}
-          noValidate
-          sx={{ mt: 1 }}
-        >
-          <FormControl sx={{ m: 1, minWidth: 120 }} >
+        <Box component="form" onSubmit={submitForm} noValidate sx={{ mt: 1 }}>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
             <TextField
               onChange={(e) => setFirstName(e.target.value)}
               value={firstName}
@@ -76,18 +73,19 @@ export const Register = () => {
             <RadioGroup
               row
               value={gender}
+              //@ts-ignore
               onChange={(e) => setGender(e.target.value)}
             >
               <FormControlLabel
-                value="female"
+                value={Gender.female}
                 control={<Radio />}
                 label="Female"
-                />
-              <FormControlLabel 
-                value="male" 
-                control={<Radio />} 
-                label="Male" 
-                />
+              />
+              <FormControlLabel
+                value={Gender.male}
+                control={<Radio />}
+                label="Male"
+              />
             </RadioGroup>
 
             <TextField

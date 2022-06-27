@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import {
   Avatar,
   IconButton,
@@ -11,15 +11,17 @@ import { userStatus } from "../../../../utils/helpers";
 import { StyledBadge } from "../Friend/Friend.styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Logout, Delete, PersonAddAlt } from "@mui/icons-material";
+import { Chat, ChatType } from "../../../../types/chat.types";
 
-export const ChatHeader = ({ chat }) => {
+interface ChatHeaderProps {
+  chat: Chat;
+}
+
+export const ChatHeader: FC<ChatHeaderProps> = ({ chat }) => {
   const [showChatOptions, setShowChatOptions] = useState(false);
   const [menuOptionsRef, setMenuOptionsRef] = useState(null);
 
-  const [showAddFriendModal, setShowAddFriendModal] = useState(false);
-  const [showLeaveChatModal, setShowLeaveChatModal] = useState(false);
-  const [showDeleteChatModal, setShowDeleteChatModal] = useState(false);
-
+  //@ts-ignore
   const handleClickChatOptions = (e) => {
     setShowChatOptions(!showChatOptions);
     setMenuOptionsRef(e.currentTarget);
@@ -33,6 +35,7 @@ export const ChatHeader = ({ chat }) => {
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               variant="dot"
+              //@ts-ignore
               userstatus={userStatus(user)}
             >
               <Avatar
@@ -42,7 +45,9 @@ export const ChatHeader = ({ chat }) => {
               />
             </StyledBadge>
 
-            <Typography component="subtitle2" sx={{ margin: "10px" }}>
+            <Typography
+              sx={{ margin: "10px" }}
+            >
               {user.firstName} {user.lastName}
             </Typography>
           </div>
@@ -63,7 +68,7 @@ export const ChatHeader = ({ chat }) => {
           </ListItemIcon>
           Add user to chat
         </MenuItem>
-        {chat.type === "group" && (
+        {chat.type === ChatType.group && (
           <MenuItem>
             <ListItemIcon>
               <Logout fontSize="small" />

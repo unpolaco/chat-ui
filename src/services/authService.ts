@@ -1,6 +1,7 @@
 import API from "./api";
 
 export const AuthService = {
+  //@ts-ignore
   login: (data) => {
     return API.post("/login", data)
       .then(({ data }) => {
@@ -12,6 +13,7 @@ export const AuthService = {
         throw err;
       });
   },
+    //@ts-ignore
   register: (data) => {
     return API.post("/register", data)
       .then(({ data }) => {
@@ -24,10 +26,12 @@ export const AuthService = {
       });
   },
   logout: () => {
+      //@ts-ignore
     API.defaults.headers["Authorization"] = "";
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   },
+    //@ts-ignore
   updateProfile: (data) => {
     const headers = {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -43,8 +47,9 @@ export const AuthService = {
       });
   },
 };
-
+  //@ts-ignore
 const setHeadersAndStorage = ({ user, token }) => {
+    //@ts-ignore
   API.defaults.headers["Authorization"] = `Bearer ${token}`;
   localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("token", token);

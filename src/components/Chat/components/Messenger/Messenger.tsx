@@ -1,12 +1,13 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { Paper } from "@mui/material";
-import React from "react";
 import { messengerWrapper } from "./Messenger.styles";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { MessageBox } from "../MessageBox/MessageBox";
 import { MessageInput } from "../MessageInput/MessageInput";
 
 export const Messenger = () => {
+  //@ts-ignore
   const chat = useSelector((state) => state.chatReducer.currentChat);
   const activeChat = () => Object.keys(chat).length > 0;
 

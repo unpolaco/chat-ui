@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,14 +12,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/actions/auth";
 
-export const Login = () => {
+export const Login: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("ameliasmiths@gmail.com");
   const [password, setPassword] = useState("weaksecret");
-
+  //@ts-ignore
   const submitForm = (e) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(login({ email, password }, navigate));
   };
 

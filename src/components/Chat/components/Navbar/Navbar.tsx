@@ -20,11 +20,13 @@ import { navbarProfileBtn } from "./Navbar.styles";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
+  //@ts-ignore
   const user = useSelector((state) => state.authReducer.user);
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [menuRef, setMenuRef] = useState(null);
 
+  //@ts-ignore
   const handleClickMenu = (e) => {
     setShowProfileOptions(!showProfileOptions);
     setMenuRef(e.currentTarget);
@@ -45,7 +47,7 @@ export const Navbar = () => {
               onClick={handleClickMenu}
               className={navbarProfileBtn}
             >
-              <Typography component="h5" variant='h7' align="left" sx={{ marginRight: "15px" }}>
+              <Typography component="h5" variant='h6' align="left" sx={{ marginRight: "15px" }}>
                 {user.firstName} {user.lastName}
               </Typography>
     
@@ -68,7 +70,10 @@ export const Navbar = () => {
                 <Avatar /> Edit profile
               </MenuItem>
               <Divider />
-              <MenuItem onClick={() => dispatch(logout())}>
+              <MenuItem onClick={
+                //@ts-ignore
+                () => dispatch(logout())
+                }>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
@@ -78,7 +83,7 @@ export const Navbar = () => {
 
             {showProfileModal && (
               <Modal
-                setShowProfileModal={(boolean) => setShowProfileModal(boolean)}
+                setShowProfileModal={(boolean: boolean) => setShowProfileModal(boolean)}
               />
              )} 
           </Toolbar>

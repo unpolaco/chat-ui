@@ -1,11 +1,12 @@
 import { LOGIN, LOGOUT, REGISTER, UPDATE_PROFILE } from "../types/types";
 
 const initialState = {
+    //@ts-ignore
   user: JSON.parse(localStorage.getItem("user")) || {},
   token: localStorage.getItem("token") || "",
   isLoggedIn: localStorage.getItem("user") ? true : false,
 };
-
+  //@ts-ignore
 export const authReducer = (state = initialState, action) => {
   const { type, payload } = action;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,35 +12,44 @@ import { updateProfile } from "../../store/actions/auth";
 import { Dialog, IconButton, Paper } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import { Gender } from "../../types/chat.types";
 
-export const Modal = ({ setShowProfileModal }) => {
+interface ModalProps {
+  setShowProfileModal: (boolean: boolean) => void;
+}
+
+export const Modal: FC<ModalProps> = ({ setShowProfileModal }) => {
   const dispatch = useDispatch();
+  //@ts-ignore
   const user = useSelector((state) => state.authReducer.user);
 
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [gender, setGender] = useState(user.gender);
+  const [gender, setGender] = useState<Gender>(user.gender);
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(user.avatar);
-
-  const submitForm = (e) => {
+  const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const form = { firstName, lastName, email, gender, avatar };
+    //@ts-ignore
     if (password.length > 0) form.password = password;
     const formData = new FormData();
     for (const key in form) {
+      //@ts-ignore
       formData.append(key, form[key]);
     }
+    //@ts-ignore
     dispatch(updateProfile(formData)).then(() => setShowProfileModal(false));
   };
 
-  const closeModal = (e) => {
+  const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     return setShowProfileModal(false);
   };
 
   return (
+    //@ts-ignore
     <Dialog open={() => setShowProfileModal(true)} onClose={closeModal}>
       <Paper elevation={3} sx={{ minWidth: 350 }}>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -60,7 +69,6 @@ export const Modal = ({ setShowProfileModal }) => {
         </div>
 
         <FormControl
-          onSubmit={submitForm}
           sx={{
             p: 3,
             mt: 1,
@@ -89,14 +97,19 @@ export const Modal = ({ setShowProfileModal }) => {
           <RadioGroup
             row
             value={gender}
+            //@ts-ignore
             onChange={(e) => setGender(e.target.value)}
           >
             <FormControlLabel
-              value="female"
+              value={Gender.female}
               control={<Radio />}
               label="Female"
             />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel
+              value={Gender.male}
+              control={<Radio />}
+              label="Male"
+            />
           </RadioGroup>
           <TextField
             onChange={(e) => setEmail(e.target.value)}
@@ -127,6 +140,7 @@ export const Modal = ({ setShowProfileModal }) => {
             <label>
               <input
                 accept="image/*"
+                //@ts-ignore
                 onChange={(e) => setAvatar(e.target.files[0])}
                 type="file"
                 style={{ display: "none" }}

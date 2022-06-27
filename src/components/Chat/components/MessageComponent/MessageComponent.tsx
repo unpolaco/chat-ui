@@ -1,8 +1,17 @@
+import React, { FC } from "react";
 import { Avatar, Typography } from "@mui/material";
-import React from "react";
-import { messageOther, messageOwner } from "./Message.styles";
+import { messageOther, messageOwner } from "./MessageComponent.styles";
+import { Chat, Message, User } from "../../../../types/chat.types";
 
-export const Message = ({ user, chat, message, index }) => {
+interface MessageComponentProps {
+  chat: Chat;
+  user: User;
+  message: Message;
+  index: number
+}
+
+export const MessageComponent: FC<MessageComponentProps> = ({ user, chat, message, index }) => {
+
   return (
     <div
       className={message.fromUserId === user.id ? messageOwner : messageOther}

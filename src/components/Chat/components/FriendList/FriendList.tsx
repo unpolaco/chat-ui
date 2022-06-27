@@ -1,16 +1,18 @@
+import React, { FC } from "react";
 import { Button, Divider, Paper, Typography } from "@mui/material";
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Friend } from "../Friend/Friend";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { addContactBtn, friendListWrapper } from "./FriendList.styles";
 import { setCurrentChat } from "../../../../store/actions/chat";
+import { Chat } from "../../../../types/chat.types";
 
-export const FriendList = () => {
+export const FriendList: FC = () => {
   const dispatch = useDispatch();
+  //@ts-ignore
   const chats = useSelector((state) => state.chatReducer.chats);
-  const openChat = (chat) => {
-    console.log(chat);
+  const openChat = (chat: Chat) => {
+    //@ts-ignore
     dispatch(setCurrentChat(chat));
   };
   return (
@@ -26,7 +28,7 @@ export const FriendList = () => {
       <Divider />
       <div>
         {chats.length > 0 ? (
-          chats.map((chat) => {
+          chats.map((chat: Chat) => {
             return (
               <Friend click={() => openChat(chat)} chat={chat} key={chat.id} />
             );

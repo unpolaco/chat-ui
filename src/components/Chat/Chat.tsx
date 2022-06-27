@@ -8,13 +8,17 @@ import { useSocket } from "./hooks/useSocket";
 
 export const Chat = () => {
   const dispatch = useDispatch();
+    //@ts-ignore
   const user = useSelector((state) => state.authReducer.user);
 
   useSocket(user, dispatch)
 
   useEffect(() => {
+      //@ts-ignore
     dispatch(fetchChats())
+      //@ts-ignore
       .then((res) => console.log(res))
+        //@ts-ignore
       .catch((err) => console.log(err))
   }, [dispatch]);
 
