@@ -7,7 +7,7 @@ import { Chat } from "../../../../types/chat.types";
 
 interface FriendProps {
   chat: Chat;
-  click: () => void
+  click: (chat: Chat) => void
 }
 
 export const Friend: FC<FriendProps> = ({ chat, click }) => {
@@ -24,7 +24,7 @@ export const Friend: FC<FriendProps> = ({ chat, click }) => {
   };
 
   return (
-    //@ts-ignore
+
     <Paper onClick={() => click(chat)} sx={{ margin: "5px" }}>
       <div style={{ display: "flex", alignItems: "center", padding: "5px" }}>
         <StyledBadge

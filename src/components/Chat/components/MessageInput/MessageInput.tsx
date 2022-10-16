@@ -9,9 +9,9 @@ interface MessageInputProps {
 }
 
 interface ReceiverProps {
-  chatId: number;
+  chatId: string;
   fromUser: any;
-  toUserId: number[];
+  toUserId: string[];
   typing?: boolean;
 }
 

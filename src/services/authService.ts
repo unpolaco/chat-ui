@@ -1,9 +1,14 @@
+import { User } from "../types/chat.types";
 import API from "./api";
 
+interface LoginProps {
+  email: string;
+  password: string;
+}
+
 export const AuthService = {
-  //@ts-ignore
-  login: (data) => {
-    return API.post("/login", data)
+  login: (data: LoginProps) => {
+    return API.post<{ user: User; token: string }>("/login", data)
       .then(({ data }) => {
         setHeadersAndStorage(data);
         return data;
@@ -13,9 +18,9 @@ export const AuthService = {
         throw err;
       });
   },
-    //@ts-ignore
-  register: (data) => {
-    return API.post("/register", data)
+
+  register: (data: User) => {
+    return API.post<{ user: User; token: string }>("/register", data)
       .then(({ data }) => {
         setHeadersAndStorage(data);
         return data;
@@ -26,17 +31,16 @@ export const AuthService = {
       });
   },
   logout: () => {
-      //@ts-ignore
-    API.defaults.headers["Authorization"] = "";
+    API.defaults.headers.common["Authorization"] = "";
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   },
-    //@ts-ignore
-  updateProfile: (data) => {
+
+  updateProfile: (data: User) => {
     const headers = {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }
-    return API.post("/users/update", data, headers)
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    };
+    return API.post<User>("/users/update", data, headers)
       .then(({ data }) => {
         localStorage.setItem("user", JSON.stringify(data));
         return data;
@@ -47,10 +51,15 @@ export const AuthService = {
       });
   },
 };
-  //@ts-ignore
-const setHeadersAndStorage = ({ user, token }) => {
-    //@ts-ignore
-  API.defaults.headers["Authorization"] = `Bearer ${token}`;
+
+const setHeadersAndStorage = ({
+  user,
+  token,
+}: {
+  user: User;
+  token: string;
+}) => {
+  API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("token", token);
 };

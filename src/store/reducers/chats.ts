@@ -1,13 +1,6 @@
+import { ChatActions } from './../actions/chat';
+import { CHAT_ACTION } from '../actions/chat';
 import { UserStatus } from './../../types/chat.types';
-import {
-  FETCH_CHATS,
-  FRIENDS_ONLINE,
-  FRIEND_OFFLINE,
-  FRIEND_ONLINE,
-  RECEIVED_MESSAGE,
-  SET_CURRENT_CHAT,
-  SET_SOCKET,
-} from "../types/types";
 import { ChatState } from './chat.types';
 
 const initialState: ChatState = {
@@ -18,21 +11,20 @@ const initialState: ChatState = {
   scrollBottom: 0,
 };
 
-//@ts-ignore
-export const chatReducer = (state = initialState, action) => {
+export const chatReducer = (state: ChatState = initialState, action: ChatActions ) => {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_CHATS:
+    case CHAT_ACTION.FETCH_CHATS:
       return {
         ...state,
         chats: payload,
       };
-    case SET_CURRENT_CHAT:
+    case CHAT_ACTION.SET_CURRENT_CHAT:
       return {
         ...state,
         currentChat: payload,
       };
-    case FRIENDS_ONLINE:
+    case CHAT_ACTION.FRIENDS_ONLINE:
       const chatsCopy = state.chats.map((chat) => {
         return {
           ...chat,
@@ -51,11 +43,11 @@ export const chatReducer = (state = initialState, action) => {
         ...state,
         chats: chatsCopy,
       };
-    case FRIEND_ONLINE: {
+    case CHAT_ACTION.FRIEND_ONLINE: {
       let currentChatCopy = { ...state.currentChat };
       const chatsCopy = state.chats.map((chat) => {
         const Users = chat.Users.map((user) => {
-          if (user.id === parseInt(payload.id)) {
+          if (user.id === payload.id) {
             return {
               ...user,
               status: UserStatus.online,
@@ -66,7 +58,6 @@ export const chatReducer = (state = initialState, action) => {
         if (chat.id === currentChatCopy.id) {
           currentChatCopy = {
             ...currentChatCopy,
-            //@ts-ignore
             Users,
           };
         }
@@ -81,11 +72,11 @@ export const chatReducer = (state = initialState, action) => {
         currentChat: currentChatCopy,
       };
     }
-    case FRIEND_OFFLINE: {
+    case CHAT_ACTION.FRIEND_OFFLINE: {
       let currentChatCopy = { ...state.currentChat };
       const chatsCopy = state.chats.map((chat) => {
         const Users = chat.Users.map((user) => {
-          if (user.id === parseInt(payload.id)) {
+          if (user.id === payload.id) {
             return {
               ...user,
               status: UserStatus.offline,
@@ -96,7 +87,6 @@ export const chatReducer = (state = initialState, action) => {
         if (chat.id === currentChatCopy.id) {
           currentChatCopy = {
             ...currentChatCopy,
-            //@ts-ignore
             Users,
           };
         }
@@ -111,13 +101,13 @@ export const chatReducer = (state = initialState, action) => {
         currentChat: currentChatCopy,
       };
     }
-    case SET_SOCKET: {
+    case CHAT_ACTION.SET_SOCKET: {
       return {
         ...state,
         socket: payload,
       };
     }
-    case RECEIVED_MESSAGE: {
+    case CHAT_ACTION.RECEIVED_MESSAGE: {
       const { userId, message } = payload;
       let currentChatCopy = { ...state.currentChat };
       let newMessage = { ...state.newMessage };
@@ -125,7 +115,7 @@ export const chatReducer = (state = initialState, action) => {
 
       const chatsCopy = state.chats.map((chat) => {
         if (message.chatId === chat.id) {
-          if (message.UserId === userId) {
+          if (message.fromUserId === userId) {
             scrollBottom++;
           } else {
             newMessage = {

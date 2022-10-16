@@ -19,10 +19,11 @@ API.interceptors.response.use(
       throw err;
     }
     if (typeof err.response.data.error.name !== "undefined") {
-      if (err.response.data.error.name === "TokenExpiredError") {
-        store.dispatch(logout());
-        throw err;
-      }
+      // if (err.response.data.error.name === "TokenExpiredError") {
+      //   //@ts-ignore
+      //   store.dispatch(logout()); //TODO Odkomentowac i naprawić
+      //   throw err;
+      // }
     }
   }
 );

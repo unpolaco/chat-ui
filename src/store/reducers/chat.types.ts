@@ -10,6 +10,6 @@ export interface ChatState {
   }
   
   export interface NewMessage {
-    chatId: number | null;
+    chatId: string | null;
     seen: boolean | null;
   }

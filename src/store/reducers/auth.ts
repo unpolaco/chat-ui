@@ -1,38 +1,40 @@
-import { LOGIN, LOGOUT, REGISTER, UPDATE_PROFILE } from "../types/types";
+import { AuthActions, AUTH_ACTION } from "../actions/auth";
+import { AuthState } from "./auth.types";
 
-const initialState = {
-    //@ts-ignore
-  user: JSON.parse(localStorage.getItem("user")) || {},
+const initialState: AuthState = {
+  user: JSON.parse(localStorage.getItem("user") || '{}'),
   token: localStorage.getItem("token") || "",
   isLoggedIn: localStorage.getItem("user") ? true : false,
 };
+
+
+export const authReducer = (state: AuthState = initialState, action: AuthActions) => {
   //@ts-ignore
-export const authReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case LOGIN:
+    case AUTH_ACTION.LOGIN:
       return {
         ...state,
         user: payload.user,
         token: payload.token,
         isLoggedIn: true,
       };
-    case REGISTER:
+    case AUTH_ACTION.REGISTER:
       return {
         ...state,
         user: payload.user,
         token: payload.token,
         isLoggedIn: true,
       };
-    case LOGOUT:
+    case AUTH_ACTION.LOGOUT:
       return {
         ...state,
         user: {},
         token: "",
         isLoggedIn: false,
       };
-    case UPDATE_PROFILE:
+    case AUTH_ACTION.UPDATE_PROFILE:
       return {
         ...state,
         user: payload,

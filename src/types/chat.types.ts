@@ -1,5 +1,5 @@
 export interface Chat {
-  id: number;
+  id: string;
   type: keyof typeof ChatType;
   createdAt: string;
   updatedAt: string;
@@ -9,15 +9,15 @@ export interface Chat {
 }
 
 export interface ChatUser {
-  chatId: number;
-  userId: number;
+  chatId: string;
+  userId: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface User {
   avatar: string;
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -31,31 +31,31 @@ export interface User {
 
 export interface Message {
   message: string;
-  id: number;
+  id: string;
   type: keyof typeof MessageType;
-  chatId: number;
-  fromUserId: number;
+  chatId: string;
+  fromUserId: string;
   createdAt: string;
   updatedAt: string;
   User: User;
 }
 
 export enum ChatType {
-  dual = 'dual',
-  group = 'group'
+  dual = "dual",
+  group = "group",
 }
 
 export enum Gender {
-  male= 'male',
-  female = 'female'
+  male = "male",
+  female = "female",
 }
 
 export enum MessageType {
-  text= 'text',
-  image = 'image'
+  text = "text",
+  image = "image",
 }
 
 export enum UserStatus {
-  online= 'online',
-  offline = 'offline'
+  online = "online",
+  offline = "offline",
 }

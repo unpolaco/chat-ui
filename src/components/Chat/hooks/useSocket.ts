@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { AnyAction, Dispatch } from "redux";
 import socketIOClient from "socket.io-client";
 import {
+  ChatActions,
   fetchChats,
   offlineFriend,
   onlineFriend,
@@ -8,9 +10,10 @@ import {
   receivedMessage,
   setSocket,
 } from "../../../store/actions/chat";
+import { User } from "../../../types/chat.types";
 
-//@ts-ignore
-export const useSocket = (user, dispatch) => {
+
+export const useSocket = (user: User, dispatch: Dispatch<ChatActions>) => {
   useEffect(() => {
     dispatch(fetchChats())
     //@ts-ignore
