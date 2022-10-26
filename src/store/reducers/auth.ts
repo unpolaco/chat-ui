@@ -1,46 +1,54 @@
-import { AuthActions, AUTH_ACTION } from "../actions/auth";
+import { ChatUser, UserStatus } from "./../../types/chat.types";
+import { createSlice } from "@reduxjs/toolkit";
+import { Gender } from "../../types/chat.types";
 import { AuthState } from "./auth.types";
 
-const initialState: AuthState = {
-  user: JSON.parse(localStorage.getItem("user") || '{}'),
+const defaultState: AuthState = {
+  user: JSON.parse(localStorage.getItem("user") || "{}"),
   token: localStorage.getItem("token") || "",
   isLoggedIn: localStorage.getItem("user") ? true : false,
 };
 
+const slice = createSlice({
+  name: "auth",
+  initialState: defaultState,
+  reducers: {
+    login: (state, { payload }) => {
+      state.user = payload.user;
+      state.token = payload.token;
+      state.isLoggedIn = true;
+    },
+    register: (state, { payload }) => {
+      state.user = payload.user;
+      state.token = payload.token;
+      state.isLoggedIn = true;
+    },
+    logout: (state) => {
+      state.user = {
+        avatar: "",
+        id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        gender: Gender.male,
+        createdAt: "",
+        updatedAt: "",
+        chatUser: {
+          chatId: "",
+          userId: "",
+          createdAt: "",
+          updatedAt: "",
+        },
+        status: UserStatus.offline,
+      };
+      state.token = "";
+      state.isLoggedIn = false;
+    },
+    updateProfile: (state, { payload }) => (state.user = payload),
+  },
+});
 
-export const authReducer = (state: AuthState = initialState, action: AuthActions) => {
-  //@ts-ignore
-  const { type, payload } = action;
+export const { login, register, logout, updateProfile } = slice.actions;
 
-  switch (type) {
-    case AUTH_ACTION.LOGIN:
-      return {
-        ...state,
-        user: payload.user,
-        token: payload.token,
-        isLoggedIn: true,
-      };
-    case AUTH_ACTION.REGISTER:
-      return {
-        ...state,
-        user: payload.user,
-        token: payload.token,
-        isLoggedIn: true,
-      };
-    case AUTH_ACTION.LOGOUT:
-      return {
-        ...state,
-        user: {},
-        token: "",
-        isLoggedIn: false,
-      };
-    case AUTH_ACTION.UPDATE_PROFILE:
-      return {
-        ...state,
-        user: payload,
-      };
-    default: {
-      return state;
-    }
-  }
-};
+export const authReducer = slice.reducer;
