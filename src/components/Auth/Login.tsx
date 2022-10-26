@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../store/actions/auth";
+import { login } from "../../store/reducers/auth";
 
 export const Login: FC = () => {
   const dispatch = useDispatch();

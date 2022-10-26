@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchChats } from "../../store/actions/chat";
-import { User } from "../../types/chat.types";
+import { AuthState } from "../../store/reducers/auth.types";
 import { FriendList } from "./components/FriendList/FriendList";
 import { Messenger } from "./components/Messenger/Messenger";
 import { Navbar } from "./components/Navbar/Navbar";
@@ -9,8 +8,7 @@ import { useSocket } from "./hooks/useSocket";
 
 export const Chat = () => {
   const dispatch = useDispatch();
-  //@ts-ignore
-  const user: User = useSelector((state) => state.authReducer.user);
+  const user = useSelector((state: AuthState) => state.user);
 
   useSocket(user, dispatch);
 

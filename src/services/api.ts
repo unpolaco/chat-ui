@@ -1,6 +1,7 @@
 import axios from "axios";
 import {store} from "../store";
-import { logout } from "../store/actions/auth";
+import { logout } from "../store/reducers/auth";
+
 
 const API = axios.create({
   baseURL: "http://127.0.0.1:5000",
@@ -19,11 +20,10 @@ API.interceptors.response.use(
       throw err;
     }
     if (typeof err.response.data.error.name !== "undefined") {
-      // if (err.response.data.error.name === "TokenExpiredError") {
-      //   //@ts-ignore
-      //   store.dispatch(logout()); //TODO Odkomentowac i naprawić
-      //   throw err;
-      // }
+      if (err.response.data.error.name === "TokenExpiredError") {
+        store.dispatch(logout()); //TODO Odkomentowac i naprawić
+        throw err;
+      }
     }
   }
 );

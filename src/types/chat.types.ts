@@ -3,9 +3,9 @@ export interface Chat {
   type: keyof typeof ChatType;
   createdAt: string;
   updatedAt: string;
-  ChatUser: ChatUser;
-  Users: User[];
-  Messages: Message[];
+  chatUser: ChatUser;
+  users: User[];
+  messages: Message[];
 }
 
 export interface ChatUser {
@@ -25,7 +25,7 @@ export interface User {
   gender: keyof typeof Gender;
   createdAt: string;
   updatedAt: string;
-  ChatUser: ChatUser;
+  chatUser: ChatUser;
   status: keyof typeof UserStatus;
 }
 
@@ -37,7 +37,7 @@ export interface Message {
   fromUserId: string;
   createdAt: string;
   updatedAt: string;
-  User: User;
+  user: User;
 }
 
 export enum ChatType {

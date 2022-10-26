@@ -28,7 +28,7 @@ export const ChatHeader: FC<ChatHeaderProps> = ({ chat }) => {
   };
   return (
     <div>
-      {chat.Users.map((user) => {
+      {chat.users.map((user) => {
         return (
           <div key={user.id}>
             <StyledBadge

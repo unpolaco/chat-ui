@@ -8,11 +8,11 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "../../store/actions/auth";
 import { Dialog, IconButton, Paper } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import { Gender } from "../../types/chat.types";
+import { AuthState } from "../../store/reducers/auth.types";
 
 interface ModalProps {
   setShowProfileModal: (boolean: boolean) => void;
@@ -20,22 +20,21 @@ interface ModalProps {
 
 export const Modal: FC<ModalProps> = ({ setShowProfileModal }) => {
   const dispatch = useDispatch();
-  //@ts-ignore
-  const user = useSelector((state) => state.authReducer.user);
+  const user = useSelector((state: AuthState) => state.user);
 
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [gender, setGender] = useState<Gender>(user.gender);
+  const [gender, setGender] = useState(user.gender);
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(user.avatar);
   const submitForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const form = { firstName, lastName, email, gender, avatar };
-    //@ts-ignore
+    const form = { firstName, lastName, email, gender, avatar, password };
     if (password.length > 0) form.password = password;
     const formData = new FormData();
     for (const key in form) {
+      //TODO
       //@ts-ignore
       formData.append(key, form[key]);
     }
@@ -49,6 +48,7 @@ export const Modal: FC<ModalProps> = ({ setShowProfileModal }) => {
   };
 
   return (
+    //TODO
     //@ts-ignore
     <Dialog open={() => setShowProfileModal(true)} onClose={closeModal}>
       <Paper elevation={3} sx={{ minWidth: 350 }}>
@@ -97,8 +97,7 @@ export const Modal: FC<ModalProps> = ({ setShowProfileModal }) => {
           <RadioGroup
             row
             value={gender}
-            //@ts-ignore
-            onChange={(e) => setGender(e.target.value)}
+            onChange={(e) => setGender(e.target.value as Gender)}
           >
             <FormControlLabel
               value={Gender.female}

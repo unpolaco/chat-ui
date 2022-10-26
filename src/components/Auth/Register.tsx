@@ -14,8 +14,8 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { register } from "../../store/actions/auth";
 import { Gender } from "../../types/chat.types";
+import { register } from "../../store/reducers/auth";
 
 export const Register = () => {
   const dispatch = useDispatch();
@@ -73,8 +73,7 @@ export const Register = () => {
             <RadioGroup
               row
               value={gender}
-              //@ts-ignore
-              onChange={(e) => setGender(e.target.value)}
+              onChange={(e) => setGender(e.target.value as Gender)}
             >
               <FormControlLabel
                 value={Gender.female}

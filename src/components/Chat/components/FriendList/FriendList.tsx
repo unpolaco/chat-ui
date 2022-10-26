@@ -4,15 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Friend } from "../Friend/Friend";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { addContactBtn, friendListWrapper } from "./FriendList.styles";
-import { setCurrentChat } from "../../../../store/actions/chat";
 import { Chat } from "../../../../types/chat.types";
+import { ChatState } from "../../../../store/reducers/chat.types";
+import { setCurrentChat } from "../../../../store/reducers/chats";
 
 export const FriendList: FC = () => {
   const dispatch = useDispatch();
-  //@ts-ignore
-  const chats = useSelector((state) => state.chatReducer.chats);
+  const chats = useSelector((state: ChatState) => state.chats);
   const openChat = (chat: Chat) => {
-    //@ts-ignore
     dispatch(setCurrentChat(chat));
   };
   return (

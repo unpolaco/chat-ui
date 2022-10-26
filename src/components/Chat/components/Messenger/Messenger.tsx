@@ -5,10 +5,10 @@ import { messengerWrapper } from "./Messenger.styles";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { MessageBox } from "../MessageBox/MessageBox";
 import { MessageInput } from "../MessageInput/MessageInput";
+import { ChatState } from "../../../../store/reducers/chat.types";
 
 export const Messenger = () => {
-  //@ts-ignore
-  const chat = useSelector((state) => state.chatReducer.currentChat);
+  const chat = useSelector((state: ChatState) => state.currentChat);
   const activeChat = () => Object.keys(chat).length > 0;
 
   return (

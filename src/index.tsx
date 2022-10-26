@@ -7,7 +7,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { createRoot } from 'react-dom/client';
 
 const theme = createTheme();
-
 const container = document.getElementById('root');
 const root = createRoot(container!);
 

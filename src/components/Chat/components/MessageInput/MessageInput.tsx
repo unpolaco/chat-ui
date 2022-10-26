@@ -3,6 +3,8 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import { IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Chat } from "../../../../types/chat.types";
+import { AuthState } from "../../../../store/reducers/auth.types";
+import { ChatState } from "../../../../store/reducers/chat.types";
 
 interface MessageInputProps {
   chat: Chat;
@@ -16,10 +18,8 @@ interface ReceiverProps {
 }
 
 export const MessageInput: FC<MessageInputProps> = ({ chat }) => {
-  //@ts-ignore
-  const user = useSelector((state) => state.authReducer.user);
-  //@ts-ignore
-  const socket = useSelector((state) => state.chatReducer.socket);
+  const user = useSelector((state: AuthState) => state.user);
+  const socket = useSelector((state: ChatState) => state.socket);
 
   const [message, setMessage] = useState("");
   const [image, setImage] = useState("");
@@ -27,22 +27,22 @@ export const MessageInput: FC<MessageInputProps> = ({ chat }) => {
   const handleMessage = (e) => {
     const value = e.target.value;
     setMessage(value);
-    
+
     const receiver: ReceiverProps = {
       chatId: chat.id,
       fromUser: user,
-      toUserId: chat.Users.map((user) => user.id),
+      toUserId: chat.users.map((user) => user.id),
     };
 
-    if (value.length === 1) {
-      receiver.typing = true;
-      socket.emit("typing", receiver);
-    }
+      if (value.length === 1) {
+        receiver.typing = true;
+        socket?.emit("typing", receiver);
+      }
 
-    if (value.length === 0) {
-      receiver.typing = false;
-      socket.emit("typing", receiver);
-    }
+      if (value.length === 0) {
+        receiver.typing = false;
+        socket?.emit("typing", receiver);
+      }
   };
   //@ts-ignore
   const handleKeyDown = (e, imageUpload) => {
@@ -55,7 +55,7 @@ export const MessageInput: FC<MessageInputProps> = ({ chat }) => {
     const msg = {
       type: imageUpload ? "image" : "text",
       fromUserId: user.id,
-      toUserId: chat.Users.map((user) => user.id),
+      toUserId: chat.users.map((user) => user.id),
       chatId: chat.id,
       message: imageUpload ? image : message,
     };
@@ -63,7 +63,7 @@ export const MessageInput: FC<MessageInputProps> = ({ chat }) => {
     setMessage("");
     setImage("");
 
-    socket.emit("message", msg);
+    socket?.emit("message", msg);
   };
 
   return (

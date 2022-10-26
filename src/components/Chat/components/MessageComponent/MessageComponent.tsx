@@ -19,10 +19,10 @@ export const MessageComponent: FC<MessageComponentProps> = ({ user, chat, messag
       {message.fromUserId !== user.id && (
         <>
           <Typography variant="caption" display='block'>
-            {message.User.firstName} {message.User.lastName}
+            {message.user.firstName} {message.user.lastName}
           </Typography>
           <Avatar
-            src={chat.Users[0].avatar}
+            src={chat.users[0].avatar}
             alt="User avatar"
             sx={{ width: "30px", height: "30px" }}
           />

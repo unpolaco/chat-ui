@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import { AuthState } from "../../../../store/reducers/auth.types";
 import { Chat } from "../../../../types/chat.types";
 import { MessageComponent } from "../MessageComponent/MessageComponent";
 
@@ -8,12 +9,11 @@ interface MessageBoxProps {
 }
 
 export const MessageBox: FC<MessageBoxProps> = ({ chat }) => {
-  //@ts-ignore
-  const user = useSelector((state) => state.authReducer.user);
+  const user = useSelector((state: AuthState) => state.user);
 
   return (
     <div>
-      {chat.Messages.map((message, index) => {
+      {chat.messages.map((message, index) => {
         return (
           <MessageComponent
             user={user}

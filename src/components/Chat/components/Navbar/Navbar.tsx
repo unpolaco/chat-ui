@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../../../store/actions/auth";
+
 import { Modal } from "../../../Modal/Modal";
 import {
   AppBar,
@@ -17,11 +16,14 @@ import {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Logout from "@mui/icons-material/Logout";
 import { navbarProfileBtn } from "./Navbar.styles";
+import { logout } from "../../../../store/reducers/auth";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { AuthState } from "../../../../store/reducers/auth.types";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
-  //@ts-ignore
-  const user = useSelector((state) => state.authReducer.user);
+  const user = useSelector((state: AuthState) => state.user);
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [menuRef, setMenuRef] = useState(null);
@@ -42,15 +44,24 @@ export const Navbar = () => {
       >
         <Container maxWidth="xl" sx={{ flexGrow: 1 }}>
           <Toolbar disableGutters>
-            <Typography component="h1" variant='h6' align="left" sx={{ flexGrow: 1 }}>Let's chat!</Typography>
-            <div
-              onClick={handleClickMenu}
-              className={navbarProfileBtn}
+            <Typography
+              component="h1"
+              variant="h6"
+              align="left"
+              sx={{ flexGrow: 1 }}
             >
-              <Typography component="h5" variant='h6' align="left" sx={{ marginRight: "15px" }}>
+              Let's chat!
+            </Typography>
+            <div onClick={handleClickMenu} className={navbarProfileBtn}>
+              <Typography
+                component="h5"
+                variant="h6"
+                align="left"
+                sx={{ marginRight: "15px" }}
+              >
                 {user.firstName} {user.lastName}
               </Typography>
-    
+
               <Avatar src={user.avatar} />
               <ArrowDropDownIcon style={{ marginLeft: "10px" }} />
             </div>
@@ -70,10 +81,7 @@ export const Navbar = () => {
                 <Avatar /> Edit profile
               </MenuItem>
               <Divider />
-              <MenuItem onClick={
-                //@ts-ignore
-                () => dispatch(logout())
-                }>
+              <MenuItem onClick={() => dispatch(logout())}>
                 <ListItemIcon>
                   <Logout fontSize="small" />
                 </ListItemIcon>
@@ -83,9 +91,11 @@ export const Navbar = () => {
 
             {showProfileModal && (
               <Modal
-                setShowProfileModal={(boolean: boolean) => setShowProfileModal(boolean)}
+                setShowProfileModal={(boolean: boolean) =>
+                  setShowProfileModal(boolean)
+                }
               />
-             )} 
+            )}
           </Toolbar>
         </Container>
       </AppBar>
